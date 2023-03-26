@@ -4,7 +4,7 @@ Scripts for generating a YAML file from music files (.FLAC, .mp3) for use with [
 ## Installation
 1. Clone this repository:
 `git clone https://github.com/pbinspanish/music-yaml-generator`
-2. Install [mutagen](https://github.com/quodlibet/mutagen):
+2. Install [mutagen](https://github.com/quodlibet/mutagen).
 
 ## Using the scripts
 TODO
