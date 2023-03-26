@@ -1,3 +1,17 @@
 settings:
-  root_directory: C:\Music
+  root_directory: F:\Music
   save_directory: C:\YAML
+
+# tags used for matching in Plex.
+# controls the structure of the generated YAML file.
+matching_tags:
+  flac:
+    album_artist: ALBUMARTIST
+    album_title: ALBUM
+    track_title: TITLE
+    track_number: TRACKNUMBER
+
+# tags used for updating fields in Plex.
+modification_tags:
+  flac:
+    original_artist: DISPLAY ARTIST
