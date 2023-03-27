@@ -5,8 +5,28 @@ settings:
   scan_mode: all
   modified_time_days: 7
 
-# tags used for matching in Plex.
-# controls the structure of the generated YAML file.
+# Tags to read from their respective file types.
+# This includes both tags used for matching and 
+# editing.
+read_tags:
+  .flac:
+    - ALBUMARTIST
+    - ALBUM
+    - TITLE
+    - TRACKNUMBER
+    - DISPLAY ARTIST
+    - ITUNESADVISORY
+  .mp3:
+    - TPE2
+    - TALB
+    - TIT2
+    - TRCK
+    - TXXX:DISPLAY ARTIST
+    - TXXX:ITUNESADVISORY
+
+# Tags used for matching files in plex.
+# Each value must correspond to a tag
+# in read_tags.
 matching_tags:
   .flac:
     album_artist: ALBUMARTIST
@@ -19,9 +39,13 @@ matching_tags:
     track_title: TIT2
     track_number: TRCK
 
-# tags used for updating fields in Plex.
+# Tags used for updating track fields in Plex.
+# Currently only supports original_artist and
+# title.
 modification_tags:
   .flac:
+    title: TITLE
     original_artist: DISPLAY ARTIST
   .mp3:
+    title: TIT2
     original_artist: TXXX:DISPLAY ARTIST

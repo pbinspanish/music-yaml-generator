@@ -9,6 +9,7 @@ def main():
   settings = config.get("settings")
   matching_tags = config.get("matching_tags")
   modification_tags = config.get("modification_tags")
+  read_tags = config.get("read_tags")
   
   # Generate list of files to edit
   music_files = []
@@ -33,7 +34,7 @@ def main():
                     music_files.append(full_path)
   
   # Generate YAML
-  modules.generator.generate_yaml(music_files, settings.get("save_directory"), settings.get("track_identifier"), matching_tags, modification_tags)
+  modules.generator.generate_yaml(music_files, settings.get("save_directory"), settings.get("track_identifier"), read_tags, matching_tags, modification_tags)
 
 if __name__ == "__main__":
   main()
