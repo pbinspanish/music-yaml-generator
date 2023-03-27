@@ -6,11 +6,13 @@ def read_tag(file_path, tag):
     # Read the metadata for the music file
     audio = mutagen.File(file_path)
     
-    # Return the "DISPLAY ARTIST" vorbis comment if it exists,
-    # otherwise return an empty string
+    # Return the tag if it exists, otherwise return an empty string
     return " ".join(audio.tags[tag]) if tag in audio.tags else ""
 
-def generate_yaml(root_dir, save_dir):
+def generate_yaml(root_dir, save_dir, track_identifier, matching_tags, modification_tags):
+    # Config
+    file_types = matching_tags.keys() # assuming all file types show up in both tag configs.
+    
     # Initialize a dictionary for storing the metadata
     metadata = {}
 
@@ -36,12 +38,10 @@ def generate_yaml(root_dir, save_dir):
                     itunes_advisory = read_tag(os.path.join(root, file), "TXXX:ITUNESADVISORY")
                     track_number = read_tag(os.path.join(root, file), "TRCK")
 
-                # skip adding to the yaml file if the display artist doesn't exist or is the same as the album artist
-                
-                        
                 # Add explicit indicator to track
+                mod_track_title = ""
                 if itunes_advisory == "1":
-                    track_title = track_title + " " + u"\U0001F174"
+                    mod_track_title = track_title + " " + u"\U0001F174"
 
                 # Add the display artist to the metadata dictionary
                 if album_artist not in metadata:
@@ -51,18 +51,25 @@ def generate_yaml(root_dir, save_dir):
                 if album_title not in metadata[album_artist]["albums"]:
                     metadata[album_artist]["albums"][album_title] = {}
                     metadata[album_artist]["albums"][album_title]["tracks"] = {}
-                    
-                if track_number not in metadata[album_artist]["albums"][album_title]["tracks"]:
-                    metadata[album_artist]["albums"][album_title]["tracks"][int(track_number.split("/")[0])] = {}
-                    
-                metadata[album_artist]["albums"][album_title]["tracks"][int(track_number.split("/")[0])]["original_artist"] = display_artist
-                metadata[album_artist]["albums"][album_title]["tracks"][int(track_number.split("/")[0])]["title"] = track_title
+                
+                if track_identifier == "track_number":
+                    if track_number not in metadata[album_artist]["albums"][album_title]["tracks"]:
+                        metadata[album_artist]["albums"][album_title]["tracks"][int(track_number.split("/")[0])] = {}
+                    metadata[album_artist]["albums"][album_title]["tracks"][int(track_number.split("/")[0])]["original_artist"] = display_artist
+                    metadata[album_artist]["albums"][album_title]["tracks"][int(track_number.split("/")[0])]["title"] = mod_track_title
+                
+                elif track_identifier == "track_title":
+                    if track_number not in metadata[album_artist]["albums"][album_title]["tracks"]:
+                        metadata[album_artist]["albums"][album_title]["tracks"][track_title] = {}
+                    metadata[album_artist]["albums"][album_title]["tracks"][track_title]["original_artist"] = display_artist
+                    metadata[album_artist]["albums"][album_title]["tracks"][track_title]["title"] = mod_track_title
+
+                
                 print(track_number + " " + track_title + " - " + display_artist)
 
 
     # Wrap the metadata dictionary in another dictionary
     metadata_dict = {"metadata": metadata}
 
-    # Save the metadata to a YAML file
-    with open(save_dir + "\Music.yml", "w", encoding="utf8") as outfile:
-        yaml.dump(metadata_dict, outfile, default_flow_style=False, allow_unicode=True)
+    # Save the metadata to a YAML file\
+    yaml.dump(metadata_dict, open(save_dir + "\Music.yml", "w", encoding="utf8"), default_flow_style=False, allow_unicode=True)
