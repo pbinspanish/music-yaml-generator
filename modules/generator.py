@@ -9,10 +9,7 @@ def read_tag(file_path, tag):
     # Return the tag if it exists, otherwise return an empty string
     return " ".join(audio.tags[tag]) if tag in audio.tags else ""
 
-def generate_yaml(files, root_dir, save_dir, track_identifier, matching_tags, modification_tags):
-    # Config
-    file_types = matching_tags.keys() # assuming all file types show up in both tag configs.
-    
+def generate_yaml(files, save_dir, track_identifier, matching_tags, modification_tags):
     # Initialize a dictionary for storing the metadata
     metadata = {}
 
