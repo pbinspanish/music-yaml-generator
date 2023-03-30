@@ -4,6 +4,7 @@ settings:
   track_identifier: track_number
   scan_mode: all
   modified_time_days: 7
+  explicit_character: 🅴
 
 # Tags to read from their respective file types.
 # This includes both tags used for matching and 
@@ -33,11 +34,13 @@ matching_tags:
     album_title: ALBUM
     track_title: TITLE
     track_number: TRACKNUMBER
+    append_explicit: ITUNESADVISORY
   .mp3:
     album_artist: TPE2
     album_title: TALB
     track_title: TIT2
     track_number: TRCK
+    append_explicit: TXXX:ITUNESADVISORY
 
 # Tags used for updating track fields in Plex.
 # Currently only supports original_artist and

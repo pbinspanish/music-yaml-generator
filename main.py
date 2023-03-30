@@ -34,7 +34,7 @@ def main():
                     music_files.append(full_path)
   
   # Generate YAML
-  modules.generator.generate_yaml(music_files, settings.get("save_directory"), settings.get("track_identifier"), read_tags, matching_tags, modification_tags)
+  modules.generator.generate_yaml(music_files, settings.get("save_directory"), settings.get("track_identifier"), settings.get("explicit_character"), read_tags, matching_tags, modification_tags)
 
 if __name__ == "__main__":
   main()

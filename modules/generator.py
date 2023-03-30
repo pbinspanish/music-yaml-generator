@@ -9,7 +9,7 @@ def read_tag(file_path, tag):
     # Return the tag if it exists, otherwise return an empty string
     return " ".join(audio.tags[tag]) if tag in audio.tags else ""
 
-def generate_yaml(files, save_dir, track_identifier, read_tags, matching_tags, modification_tags):
+def generate_yaml(files, save_dir, track_identifier, explicit_character, read_tags, matching_tags, modification_tags):
     metadata = {}
 
     for file in files:
@@ -28,14 +28,14 @@ def generate_yaml(files, save_dir, track_identifier, read_tags, matching_tags, m
         track_number = tags[matching_tags[current_file_type]["track_number"]]
         
         # Grab the modified values using the key from modification_tags
-        title = tags[modification_tags[current_file_type]["title"]]
-        original_artist = tags[modification_tags[current_file_type]["original_artist"]]
+        modified_title = tags[modification_tags[current_file_type]["title"]]
+        modified_artist = tags[modification_tags[current_file_type]["original_artist"]]
         
-        # Add explicit indicator to track
-        # mod_track_title = ""
-        # if itunes_advisory == "1":
-        #     mod_track_title = track_title + " " + u"\U0001F174"
+        # Explicit Indicator
+        if tags[matching_tags[current_file_type]["append_explicit"]] == "1":
+            modified_title += " " + explicit_character
 
+        
         # Add the display artist to the metadata dictionary
         if album_artist not in metadata:
             metadata[album_artist] = {}                         # adds an empty dictionary at the album artist
@@ -48,16 +48,14 @@ def generate_yaml(files, save_dir, track_identifier, read_tags, matching_tags, m
         if track_identifier == "track_number":
             if track_number not in metadata[album_artist]["albums"][album_title]["tracks"]:
                 metadata[album_artist]["albums"][album_title]["tracks"][int(track_number.split("/")[0])] = {}
-            metadata[album_artist]["albums"][album_title]["tracks"][int(track_number.split("/")[0])]["original_artist"] = original_artist
-            metadata[album_artist]["albums"][album_title]["tracks"][int(track_number.split("/")[0])]["title"] = title
+            metadata[album_artist]["albums"][album_title]["tracks"][int(track_number.split("/")[0])]["original_artist"] = modified_artist
+            metadata[album_artist]["albums"][album_title]["tracks"][int(track_number.split("/")[0])]["title"] = modified_title
         
         elif track_identifier == "track_title":
             if track_number not in metadata[album_artist]["albums"][album_title]["tracks"]:
                 metadata[album_artist]["albums"][album_title]["tracks"][track_title] = {}
-            metadata[album_artist]["albums"][album_title]["tracks"][track_title]["original_artist"] = original_artist
-            metadata[album_artist]["albums"][album_title]["tracks"][track_title]["title"] = title
-        
-        print(tags)
+            metadata[album_artist]["albums"][album_title]["tracks"][track_title]["original_artist"] = modified_artist
+            metadata[album_artist]["albums"][album_title]["tracks"][track_title]["title"] = modified_title
 
     # Wrap the metadata dictionary in another dictionary
     metadata_dict = {"metadata": metadata}
