@@ -1,9 +1,9 @@
 settings:
-  root_directory: C:\Music
-  save_directory: C:\YAML
+  root_directory: F:\Music
+  save_directory: X:\Programs\plex-meta-manager\config
   track_identifier: track_number
-  scan_mode: all
-  modified_time_days: 7
+  scan_mode: modified
+  modified_time_days: 1
   explicit_character: 🅴
 
 # Tags to read from their respective file types.
