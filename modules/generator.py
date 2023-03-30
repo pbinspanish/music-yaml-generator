@@ -9,7 +9,7 @@ def read_tag(file_path, tag):
     # Return the tag if it exists, otherwise return an empty string
     return " ".join(audio.tags[tag]) if tag in audio.tags else ""
 
-def generate_yaml(files, save_dir, track_identifier, explicit_character, read_tags, matching_tags, modification_tags):
+def generate_yaml(files, track_identifier, explicit_character, read_tags, matching_tags, modification_tags):
     metadata = {}
 
     for file in files:
@@ -60,5 +60,4 @@ def generate_yaml(files, save_dir, track_identifier, explicit_character, read_ta
     # Wrap the metadata dictionary in another dictionary
     metadata_dict = {"metadata": metadata}
 
-    # Save the metadata to a YAML file\
-    yaml.dump(metadata_dict, open(save_dir + "\Music.yml", "w", encoding="utf8"), default_flow_style=False, allow_unicode=True)
+    return metadata_dict
