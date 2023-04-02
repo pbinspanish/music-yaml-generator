@@ -6,7 +6,7 @@ Scripts for generating a YAML file from music files (.FLAC, .mp3) for use with [
 `git clone https://github.com/pbinspanish/music-yaml-generator`
 2. Install [mutagen](https://github.com/quodlibet/mutagen).
 
-## Using the scripts
+To run the script, use `python main.py`. Note that while this will likely work with on other platforms and versions, it has only been tested with Python 3.11 and on Windows 11.
 
 ## Config File
 ### Fields
