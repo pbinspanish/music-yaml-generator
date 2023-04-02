@@ -18,7 +18,7 @@ Scripts for generating a YAML file from music files (.FLAC, .mp3) for use with [
 - `modified_time_days`: when `scan_mode` is set to `modified`, it will scan the last X days of changes, X being the value in `modified_time_days`
 - `explicit_character`: the string to be appended to the title when `append_explicit` is set in `matching_tags`
 #### read_tags
-The first level in `read_tags` is the file extensions, with the dot, that will be scanned e.g. ".flac". Each file extension takes a list of tags to be read. See the [mutagen documentation]([Overview — mutagen](https://mutagen.readthedocs.io/en/latest/)) for more information about which tags and file types are supported.
+The first level in `read_tags` is the file extensions, with the dot, that will be scanned e.g. ".flac". Each file extension takes a list of tags to be read. See the [mutagen documentation](https://mutagen.readthedocs.io/en/latest/) for more information about which tags and file types are supported.
 
 #### matching_tags
 These tags are used for matching. Like `read_tags`, the first level is the file extensions. each file extension contains a list of fields used for matching music files to tracks in plex. The values of each of these fields must match a read tag in `read_tags`.
@@ -29,7 +29,7 @@ These tags are used for matching. Like `read_tags`, the first level is the file 
 - `append_explicit`: This is the tag to read to determine whether to append the string in `explicit_character`. Note that this assumes the tag is set to 1 when explicit. Intended for use with the ITUNESADVISORY tag.
 
 #### modification_tags
-These tags are used for modifying fields in Plex, as per the [Plex Meta Manager documentation]([Music Library Metadata — Plex Meta Manager Wiki 1.18.3 documentation](https://metamanager.wiki/en/latest/metadata/metadata/music.html#general-attributes)). Currently, only `title` and `original_artist` are supported. The values of each of these fields must match a read tag in `read_tags`.
+These tags are used for modifying fields in Plex, as per the [Plex Meta Manager documentation](https://metamanager.wiki/en/latest/metadata/metadata/music.html#general-attributes). Currently, only `title` and `original_artist` are supported. The values of each of these fields must match a read tag in `read_tags`.
 - `title`: Changes the title of a track in Plex. If `append_explicit` is used, then the `explicit_character` string will be appended to this tag.
 - `original_artist`: Changes the original_artist field in Plex. Note that this is not the album artist, used for grouping and matching, but rather a per track field.
 
